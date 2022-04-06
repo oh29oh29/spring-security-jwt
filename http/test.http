@@ -1,0 +1,32 @@
+### 회원가입
+POST {{host}}/api/v1/member/join
+Content-Type: application/json
+
+{
+  "memberId": "{{userId}}",
+  "password": "{{password}}",
+  "roles": ["USER", "ADMIN"]
+}
+
+### 로그인
+POST {{host}}/api/v1/member/login
+Content-Type: application/json
+
+{
+  "memberId": "{{userId}}",
+  "password": "{{password}}"
+}
+
+> {%
+  client.global.set("accessToken", response.body.result.accessToken);
+%}
+
+### 인가 허용 테스트
+POST {{host}}/api/v1/member/success
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+### 인가 실패 테스트
+POST {{host}}/api/v1/member/forbidden
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
